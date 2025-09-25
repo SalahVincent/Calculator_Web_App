@@ -5,34 +5,80 @@
   font-size: 20px;
   font-weight: 750;
 }
-#screen {
-  background-color: rgb(253, 253, 253);
+#screen  {
+  background-color: #fdfdfd;
   height: auto;
-  border-radius: 0 0 20px 0;
+  border-radius: 0 0 20px;
 }
 
-#history {
+#history  {
   height: 10vh;
 }
-#result {
-  background-color: rgba(235, 232, 232, 0.863);
+#result  {
+  background-color: #ebe8e8dc;
   border-radius: 15px;
   height: 12vh;
   margin: 3%;
 }
 
-#number {
+#number  {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 .numrow,
-.oprow {
+.oprow  {
   width: 100%;
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 0 0 10px 0;
+  padding: 0 0 10px;
+}
+
+.operations  {
+  height: 60vh;
+  width: 25%;
+}
+
+#numandop  {
+  display: flex;
+  height: 60vh;
+}
+
+.button  {
+  background-color: #dadada8c;
+  color: #000000;
+  height: 57px;
+  width: 65px;
+  border-radius: 35%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonop  {
+  background-color: #af2a2a5e;
+  color: white;
+  height: 57px;
+  width: 57px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttoneq  {
+  background-color: #b94040;
+  color: white;
+  height: 57px;
+  width: 57px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
