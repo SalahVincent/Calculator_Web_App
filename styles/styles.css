@@ -68,7 +68,7 @@ body {
 #plusminus,
 #modulus {
   background-color: #d4d4d2;
-  color: #ffffff;
+  color: #fff;
   height: 75px;
   width: 75px;
   border-radius: 100%;
@@ -84,7 +84,7 @@ body {
 #multiply,
 #buttoneq {
   background-color: #ff9500;
-  color: #ffffff;
+  color: #fff;
   height: 75px;
   width: 75px;
   border-radius: 100%;
@@ -99,7 +99,7 @@ button,
 #backspace,
 #decimal {
   background-color: #505050;
-  color: #ffffff;
+  color: #fff;
   height: 75px;
   width: 75px;
   border-radius: 100%;
