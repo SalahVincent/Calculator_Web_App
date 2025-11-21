@@ -42,6 +42,9 @@ body {
 }
 
 #numrow,
+#numrow1,
+#numrow2,
+#numrow3,
 #oprow {
   width: 100%;
   align-items: center;
@@ -107,17 +110,5 @@ button,
 }
 
 button:active {
-  transform: scale(1.1)
-}
-
-#buttonop {
-  background-color: #af2a2a5e;
-  color: white;
-  height: 57px;
-  width: 57px;
-  border-radius: 50%;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: scale(1.1);
 }
