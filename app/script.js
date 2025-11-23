@@ -14,6 +14,7 @@ const modulusButton = document.getElementById("modulus");
 let currentNumber = "";
 let previousNumber = "";
 let currentOperator = "";
+let operation = ""
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -27,7 +28,8 @@ operatorButtons.forEach((button) => {
     if (currentNumber !== "") {
       previousNumber = currentNumber;
       currentNumber = "";
-      currentOperator = button.textContent;
+      currentOperator += button.textContent;
+      display.value = currentNumber
     }
   });
 });
@@ -88,8 +90,9 @@ backspaceButton.addEventListener("click", () => {
 });
 
 decimalButton.addEventListener("click", () => {
-  if (!currentNumber.includes(".")) {
-    currentNumbeconst = ".";
+  if (currentNumber !== "") {
+    currentNumber += ".";
+    currentNumber += button.textContent;
     display.value = currentNumber;
   }
 });
