@@ -88,7 +88,7 @@ backspaceButton.addEventListener('click', () => {
   display.value = currentNumber
 })
 
-decimalButton.addEventListener('click', () => {
+decimalButton.addEventListener('click', (button) => {
   if (currentNumber !== '') {
     currentNumber += '.'
     currentNumber += button.textContent
