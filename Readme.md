@@ -28,7 +28,7 @@ To get a copy to your local directory:
 ## Starting project
 Steps:
 - Right click on the index.html file
-- click on copy path
+- Left click on copy path
 - paste the path on your browser and enter
 
 ## Live site
