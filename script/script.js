@@ -1,4 +1,4 @@
-const display = document.getElementById('result');
+const display = document.getElementById('result')
 const clearButton = document.getElementById('clear')
 const backspaceButton = document.getElementById('backspace')
 const equalsButton = document.getElementById('buttoneq')
@@ -36,21 +36,21 @@ equalsButton.addEventListener('click', () => {
     switch (currentOperator) {
       case '+':
         result = parseFloat(previousNumber) + parseFloat(currentNumber)
-        break;
+        break
       case '-':
         result = parseFloat(previousNumber) - parseFloat(currentNumber)
-        break;
+        break
       case '*':
         result = parseFloat(previousNumber) * parseFloat(currentNumber)
-        break;
+        break
       case '/':
         if (parseFloat(currentNumber) !== 0) {
           result = parseFloat(previousNumber) / parseFloat(currentNumber)
         } else {
           display.value = 'Error'
-          return;
+          return
         }
-        break;
+        break
       default:
         result = 0
     }
@@ -63,7 +63,7 @@ equalsButton.addEventListener('click', () => {
 
 modulusButton.addEventListener('click', () => {
   if (currentNumber !== '' && previousNumber !== '') {
-    let result = parseFloat(previousNumber) % parseFloat(currentNumber)
+    const result = parseFloat(previousNumber) % parseFloat(currentNumber)
     display.value = result
     currentNumber = result.toString()
     previousNumber = ''
@@ -89,7 +89,7 @@ backspaceButton.addEventListener('click', () => {
 decimalButton.addEventListener('click', () => {
   if (currentNumber !== '' && !currentNumber.includes('.')) {
     currentNumber += '.'
-    display.value = currentNumber;
+    display.value = currentNumber
   } else if (currentNumber === '') {
     currentNumber = '0.'
     display.value = currentNumber
