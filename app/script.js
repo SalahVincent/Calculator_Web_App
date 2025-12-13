@@ -10,10 +10,12 @@ const operatorButtons = document.querySelectorAll(
 )
 const decimalButton = document.getElementById('decimal')
 const modulusButton = document.getElementById('modulus')
+const plusminusButton = document.getElementById('plusminus')
 
 let currentNumber = ''
 let previousNumber = ''
 let currentOperator = ''
+let operator = ''
 
 numberButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -66,7 +68,7 @@ equalsButton.addEventListener('click', () => {
 
 modulusButton.addEventListener('click', () => {
   if (currentNumber !== '' && previousNumber !== '') {
-    const result = parseFloat(previousNumber) % parseFloat(currentNumber)
+    let result = parseFloat(previousNumber) % parseFloat(currentNumber)
     display.value = result
     currentNumber = result.toString()
     previousNumber = ''
@@ -88,10 +90,9 @@ backspaceButton.addEventListener('click', () => {
   display.value = currentNumber
 })
 
-decimalButton.addEventListener('click', (button) => {
-  if (currentNumber !== '') {
+decimalButton.addEventListener('click', () => {
+  if (currentNumber !== '' && !currentNumber.includes('.')) {
     currentNumber += '.'
-    currentNumber += button.textContent
     display.value = currentNumber
-  }
+  } else if (currentNumber === '')
 })
