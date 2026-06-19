@@ -1,52 +1,44 @@
 :root {
   --bg-global: #050505;
   --bg-app: #1c1c1e;
-  --bg-display: #000000;
-  --text-primary: #ffffff;
+  --bg-display: #000;
+  --text-primary: #fff;
   --text-muted: #a6a6a6;
-  
   --btn-num-bg: #3a3a3c;
-  --btn-num-text: #ffffff;
+  --btn-num-text: #fff;
   --btn-num-hover: #48484a;
-  
   --btn-meta-bg: #aeaeb2;
-  --btn-meta-text: #000000;
+  --btn-meta-text: #000;
   --btn-meta-hover: #c7c7cc;
-  
   --btn-op-bg: #ff9f0a;
-  --btn-op-text: #ffffff;
+  --btn-op-text: #fff;
   --btn-op-hover: #ffb340;
-  
-  --shadow-app: rgba(0, 0, 0, 0.5) 0px 20px 50px;
+  --shadow-app: rgb(0 0 0 / 50%) 0 20px 50px;
 }
 
 [data-theme="light"] {
   --bg-global: #f2f2f7;
-  --bg-app: #ffffff;
+  --bg-app: #fff;
   --bg-display: #f2f2f7;
-  --text-primary: #000000;
+  --text-primary: #000;
   --text-muted: #646466;
-  
   --btn-num-bg: #e5e5ea;
-  --btn-num-text: #000000;
+  --btn-num-text: #000;
   --btn-num-hover: #d1d1d6;
-  
   --btn-meta-bg: #acacb0;
-  --btn-meta-text: #ffffff;
+  --btn-meta-text: #fff;
   --btn-meta-hover: #8e8e93;
-  
   --btn-op-bg: #ff9500;
-  --btn-op-text: #ffffff;
+  --btn-op-text: #fff;
   --btn-op-hover: #e08500;
-  
-  --shadow-app: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  --shadow-app: rgb(0 0 0 / 10%) 0 10px 30px;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: Poppins, sans-serif;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -149,7 +141,9 @@ body {
   background-color: var(--btn-num-bg);
   color: var(--btn-num-text);
 }
-.btn-num:hover, .btn-num:focus-visible {
+
+.btn-num:hover,
+.btn-num:focus-visible {
   background-color: var(--btn-num-hover);
 }
 
@@ -158,7 +152,9 @@ body {
   color: var(--btn-meta-text);
   font-size: 1.25rem;
 }
-.btn-meta:hover, .btn-meta:focus-visible {
+
+.btn-meta:hover,
+.btn-meta:focus-visible {
   background-color: var(--btn-meta-hover);
 }
 
@@ -166,7 +162,9 @@ body {
   background-color: var(--btn-op-bg);
   color: var(--btn-op-text);
 }
-.btn-op:hover, .btn-op:focus-visible {
+
+.btn-op:hover,
+.btn-op:focus-visible {
   background-color: var(--btn-op-hover);
 }
 
@@ -174,7 +172,9 @@ body {
   background-color: var(--btn-op-bg);
   color: var(--btn-op-text);
 }
-.btn-eq:hover, .btn-eq:focus-visible {
+
+.btn-eq:hover,
+.btn-eq:focus-visible {
   background-color: var(--btn-op-hover);
 }
 
@@ -187,10 +187,12 @@ body {
     border-radius: 20px;
     padding: 16px;
   }
+
   .btn {
     height: 64px;
     font-size: 1.25rem;
   }
+
   #result {
     font-size: 1.8rem;
   }
