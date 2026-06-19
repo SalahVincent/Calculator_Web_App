@@ -6,12 +6,12 @@ const sunIcon = document.querySelector('.sun-icon')
 const moonIcon = document.querySelector('.moon-icon')
 
 let currentInput = '0'
-let expressionArray = [] 
+let expressionArray = []
 let isEvaluated = false
 
 themeToggle.addEventListener('click', () => {
   const currentTheme = document.documentElement.getAttribute('data-theme')
-  
+
   switch (currentTheme) {
     case 'light':
       document.documentElement.setAttribute('data-theme', 'dark')
@@ -29,10 +29,9 @@ themeToggle.addEventListener('click', () => {
 document.getElementById('keypad').addEventListener('click', (e) => {
   const target = e.target.closest('button')
   if (!target) return
-  
+
   const id = target.id
   const val = target.textContent.trim()
-
 
   switch (true) {
     case (target.classList.contains('btn-num') && id !== 'backspace'):
@@ -54,7 +53,7 @@ document.getElementById('keypad').addEventListener('click', (e) => {
   }
 })
 
-function handleDigit(digit) {
+function handleDigit (digit) {
   if (isEvaluated) {
     currentInput = digit
     isEvaluated = false
@@ -64,7 +63,7 @@ function handleDigit(digit) {
   updateUI()
 }
 
-function handleDecimal() {
+function handleDecimal () {
   if (isEvaluated) {
     currentInput = '0.'
     isEvaluated = false
@@ -77,25 +76,25 @@ function handleDecimal() {
   }
 }
 
-function handleOperator(op) {
+function handleOperator (op) {
   if (isEvaluated) isEvaluated = false
-  
+
   if (currentInput !== '') {
     expressionArray.push(currentInput)
   }
-  
+
   const lastItem = expressionArray[expressionArray.length - 1]
   if (['+', '−', '×', '÷'].includes(lastItem) && currentInput === '') {
     expressionArray[expressionArray.length - 1] = op
   } else {
     expressionArray.push(op)
   }
-  
+
   currentInput = ''
   updateUI()
 }
 
-function executeBackspace() {
+function executeBackspace () {
   if (isEvaluated) {
     expressionArray = []
     isEvaluated = false
@@ -105,28 +104,70 @@ function executeBackspace() {
   updateUI()
 }
 
-function toggleSign() {
+function toggleSign () {
   if (currentInput !== '0' && currentInput !== '') {
     currentInput = (parseFloat(currentInput) * -1).toString()
     updateUI()
   }
 }
 
-function handlePercentage() {
+function handlePercentage () {
   if (currentInput !== '' && currentInput !== '0') {
     currentInput = (parseFloat(currentInput) / 100).toString()
     updateUI()
   }
 }
 
-function resetCalculator() {
+function resetCalculator () {
   currentInput = '0'
   expressionArray = []
   isEvaluated = false
   updateUI()
 }
 
-function evaluateExpression() {
+function parseMathString (str) {
+  const tokens = str.split(' ')
+  const values = []
+  const ops = []
+
+  const precedence = (op) => {
+    if (op === '+' || op === '-') return 1
+    if (op === '*' || op === '/') return 2
+    return 0
+  }
+
+  const applyOp = () => {
+    const b = values.pop()
+    const a = values.pop()
+    const op = ops.pop()
+    switch (op) {
+      case '+': values.push(a + b); break
+      case '-': values.push(a - b); break
+      case '*': values.push(a * b); break
+      case '/': values.push(a / b); break
+    }
+  }
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]
+    if (!isNaN(parseFloat(token))) {
+      values.push(parseFloat(token))
+    } else {
+      while (ops.length && precedence(ops[ops.length - 1]) >= precedence(token)) {
+        applyOp()
+      }
+      ops.push(token)
+    }
+  }
+
+  while (ops.length) {
+    applyOp()
+  }
+
+  return values[0]
+}
+
+function evaluateExpression () {
   if (currentInput !== '') {
     expressionArray.push(currentInput)
   }
@@ -140,10 +181,9 @@ function evaluateExpression() {
   }
 
   try {
-    let sanitizedString = formula.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-')
-    
-    let calculatedVal = new Function(`return (${sanitizedString})`)()
-    
+    const sanitizedString = formula.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-')
+    const calculatedVal = parseMathString(sanitizedString)
+
     if (!isFinite(calculatedVal)) {
       display.value = 'Error'
       currentInput = '0'
@@ -162,7 +202,7 @@ function evaluateExpression() {
   }
 }
 
-function updateUI() {
+function updateUI () {
   display.value = currentInput || '0'
   historyDisplay.textContent = expressionArray.join(' ')
 }
@@ -183,7 +223,7 @@ window.addEventListener('keydown', (e) => {
         case '/': handleOperator('÷'); break
         case '%': handlePercentage(); break
         case 'Enter':
-        case '=': 
+        case '=':
           evaluateExpression()
           break
         case 'Backspace': executeBackspace(); break

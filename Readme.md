@@ -10,8 +10,9 @@
 
 ## About
 
-- Building a premium, responsive calculator web app with reference to the iconic iOS/iPhone calculator application layout. 
-- **How it works:** The application features a continuous mathematical formula engine. Instead of immediate step-by-step sequential processing, users can input complex chained expressions (e.g., 12 + 7 - 3 * 5). The application uses structured token lookup arrays managed entirely by unified `switch(true)` modules to parse inputs, prevent invalid syntax, eliminate native JavaScript floating-point decimal rounding artifacts, and render both active entries and past operations history concurrently in real-time.
+- Building a premium, responsive calculator web app with reference to the iconic iOS/iPhone calculator application layout.
+- **How it works:** The application features a continuous mathematical formula engine. Instead of immediate step-by-step sequential processing, users can input complex chained expressions (e.g., 12 + 7 - 3 * 5).
+The application uses structured token lookup arrays managed entirely by unified `switch(true)` modules to parse inputs, prevent invalid syntax, eliminate native JavaScript floating-point decimal rounding artifacts, and render both active entries and past operations history concurrently in real-time.
 
 
 ## Design
