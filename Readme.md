@@ -5,7 +5,7 @@
 
 ## View
 
-- ![Calculator](./images/Calculator.png)
+- ![Calculator](./images/calculatorpreview(1).png)
 
 
 ## About
