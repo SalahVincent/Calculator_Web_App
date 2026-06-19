@@ -4,63 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Kaushan+Script|Poppins&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>Calculator Web App</title>
   </head>
   <body>
     <div id="app">
-      <div id="history"></div>
-      <input id="result" type="number" disabled>
-      <div id="numandop">
-        <div id="number">
-          <div id="oprow">
-            <div id="clear">AC</div>
-            <div id="plusminus">+/-</div>
-            <div id="modulus">%</div>
-            <div id="divide">/</div>
-          </div>
-          <div id="numrow">
-            <button id="seven">7</button>
-            <button id="eight">8</button>
-            <button id="nine">9</button>
-            <div id="multiply">*</div>
-          </div>
-          <div id="numrow1">
-            <button id="four">4</button>
-            <button id="five">5</button>
-            <button id="six">6</button>
-            <div id="subtract">-</div>
-          </div>
-          <div id="numrow2">
-            <button id="one">1</button>
-            <button id="two">2</button>
-            <button id="three">3</button>
-            <div id="add">+</div>
-          </div>
-          <div id="numrow3">
-            <button id="zero">0</button>
-            <button id="decimal">.</button>
-            <div id="backspace" >
-              <svg
-                height="35"
-                width="35"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 5H9.83a3 3 0 0 0-2.12.88l-5.42 5.41a1 1 0 0 0 0 1.42l5.42 5.41a3 3 0 0 0 2.12.88H19a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3Zm1 11a1 1 0 0 1-1 1H9.83a1.05 1.05 0 0 1-.71-.29L4.41 12l4.71-4.71A1.05 1.05 0 0 1 9.83 7H19a1 1 0 0 1 1 1Zm-3.29-6.71a1 1 0 0 0-1.42 0L14 10.59l-1.29-1.3a1 1 0 0 0-1.42 1.42l1.3 1.29l-1.3 1.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l1.29-1.3l1.29 1.3a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42L15.41 12l1.3-1.29a1 1 0 0 0 0-1.42Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div id="buttoneq">=</div>
-          </div>
-        </div>
+      <div class="calc-header">
+        <button id="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </div>
-    <script src="script/script.js"></script>
+
+      <div class="display-container">
+        <div id="history" aria-live="polite"></div>
+        <input id="result" type="text" value="0" readonly aria-label="Calculation Result" />
+      </div>
+
+      <div id="keypad">
+        <button id="clear" class="btn btn-meta">AC</button>
+        <button id="plusminus" class="btn btn-meta">+/-</button>
+        <button id="modulus" class="btn btn-meta">%</button>
+        <button id="divide" class="btn btn-op">÷</button>
+
+        <button id="seven" class="btn btn-num">7</button>
+        <button id="eight" class="btn btn-num">8</button>
+        <button id="nine" class="btn btn-num">9</button>
+        <button id="multiply" class="btn btn-op">×</button>
+
+        <button id="four" class="btn btn-num">4</button>
+        <button id="five" class="btn btn-num">5</button>
+        <button id="six" class="btn btn-num">6</button>
+        <button id="subtract" class="btn btn-op">-</button>
+
+        <button id="one" class="btn btn-num">1</button>
+        <button id="two" class="btn btn-num">2</button>
+        <button id="three" class="btn btn-num">3</button>
+        <button id="add" class="btn btn-op">+</button>
+
+        <button id="zero" class="btn btn-num">0</button>
+        <button id="decimal" class="btn btn-num">.</button>
+        <button id="backspace" class="btn btn-num" aria-label="Backspace">
+          <svg height="22" width="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 5H9.83a3 3 0 0 0-2.12.88l-5.42 5.41a1 1 0 0 0 0 1.42l5.42 5.41a3 3 0 0 0 2.12.88H19a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3Zm1 11a1 1 0 0 1-1 1H9.83a1.05 1.05 0 0 1-.71-.29L4.41 12l4.71-4.71A1.05 1.05 0 0 1 9.83 7H19a1 1 0 0 1 1 1Zm-3.29-6.71a1 1 0 0 0-1.42 0L14 10.59l-1.29-1.3a1 1 0 0 0-1.42 1.42l1.3 1.29l-1.3 1.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l1.29-1.3l1.29 1.3a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42L15.41 12l1.3-1.29a1 1 0 0 0 0-1.42Z" fill="currentColor"/>
+          </svg>
+        </button>
+        <button id="buttoneq" class="btn btn-eq">=</button>
+      </div>
     </div>
+    <script src="script/script.js"></script>
   </body>
 </html>

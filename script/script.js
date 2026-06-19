@@ -1,104 +1,194 @@
 const display = document.getElementById('result')
-const clearButton = document.getElementById('clear')
-const backspaceButton = document.getElementById('backspace')
-const equalsButton = document.getElementById('buttoneq')
-const numberButtons = document.querySelectorAll('#zero, #one, #two, #three, #four, #five, #six, #seven, #eight, #nine')
-const operatorButtons = document.querySelectorAll('#add, #subtract, #multiply, #divide')
-const decimalButton = document.getElementById('decimal')
-const modulusButton = document.getElementById('modulus')
-const plusminusButton = document.getElementById('plusminus')
+const historyDisplay = document.getElementById('history')
 
-let currentNumber = ''
-let previousNumber = ''
-let currentOperator = ''
+const themeToggle = document.getElementById('theme-toggle')
+const sunIcon = document.querySelector('.sun-icon')
+const moonIcon = document.querySelector('.moon-icon')
 
-numberButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    currentNumber += button.textContent
-    display.value = currentNumber
-  })
+let currentInput = '0'
+let expressionArray = [] 
+let isEvaluated = false
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme')
+  
+  switch (currentTheme) {
+    case 'light':
+      document.documentElement.setAttribute('data-theme', 'dark')
+      sunIcon.style.display = 'block'
+      moonIcon.style.display = 'none'
+      break
+    default:
+      document.documentElement.setAttribute('data-theme', 'light')
+      sunIcon.style.display = 'none'
+      moonIcon.style.display = 'block'
+      break
+  }
 })
 
-operatorButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    if (currentNumber !== '') {
-      previousNumber = currentNumber
-      currentNumber = ''
-      currentOperator = button.textContent
-      display.value = currentNumber
+document.getElementById('keypad').addEventListener('click', (e) => {
+  const target = e.target.closest('button')
+  if (!target) return
+  
+  const id = target.id
+  const val = target.textContent.trim()
+
+
+  switch (true) {
+    case (target.classList.contains('btn-num') && id !== 'backspace'):
+      handleDigit(val)
+      break
+    case target.classList.contains('btn-op'):
+      handleOperator(val)
+      break
+    default:
+      switch (id) {
+        case 'clear': resetCalculator(); break
+        case 'backspace': executeBackspace(); break
+        case 'decimal': handleDecimal(); break
+        case 'plusminus': toggleSign(); break
+        case 'modulus': handlePercentage(); break
+        case 'buttoneq': evaluateExpression(); break
+      }
+      break
+  }
+})
+
+function handleDigit(digit) {
+  if (isEvaluated) {
+    currentInput = digit
+    isEvaluated = false
+  } else {
+    currentInput = currentInput === '0' ? digit : currentInput + digit
+  }
+  updateUI()
+}
+
+function handleDecimal() {
+  if (isEvaluated) {
+    currentInput = '0.'
+    isEvaluated = false
+    updateUI()
+    return
+  }
+  if (!currentInput.includes('.')) {
+    currentInput += '.'
+    updateUI()
+  }
+}
+
+function handleOperator(op) {
+  if (isEvaluated) isEvaluated = false
+  
+  if (currentInput !== '') {
+    expressionArray.push(currentInput)
+  }
+  
+  const lastItem = expressionArray[expressionArray.length - 1]
+  if (['+', '−', '×', '÷'].includes(lastItem) && currentInput === '') {
+    expressionArray[expressionArray.length - 1] = op
+  } else {
+    expressionArray.push(op)
+  }
+  
+  currentInput = ''
+  updateUI()
+}
+
+function executeBackspace() {
+  if (isEvaluated) {
+    expressionArray = []
+    isEvaluated = false
+  }
+  currentInput = currentInput.slice(0, -1)
+  if (currentInput === '' || currentInput === '-') currentInput = '0'
+  updateUI()
+}
+
+function toggleSign() {
+  if (currentInput !== '0' && currentInput !== '') {
+    currentInput = (parseFloat(currentInput) * -1).toString()
+    updateUI()
+  }
+}
+
+function handlePercentage() {
+  if (currentInput !== '' && currentInput !== '0') {
+    currentInput = (parseFloat(currentInput) / 100).toString()
+    updateUI()
+  }
+}
+
+function resetCalculator() {
+  currentInput = '0'
+  expressionArray = []
+  isEvaluated = false
+  updateUI()
+}
+
+function evaluateExpression() {
+  if (currentInput !== '') {
+    expressionArray.push(currentInput)
+  }
+
+  let formula = expressionArray.join(' ')
+  if (!formula) return
+
+  if (['+', '−', '×', '÷'].includes(expressionArray[expressionArray.length - 1])) {
+    expressionArray.pop()
+    formula = expressionArray.join(' ')
+  }
+
+  try {
+    let sanitizedString = formula.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-')
+    
+    let calculatedVal = new Function(`return (${sanitizedString})`)()
+    
+    if (!isFinite(calculatedVal)) {
+      display.value = 'Error'
+      currentInput = '0'
+      expressionArray = []
+    } else {
+      currentInput = Number(calculatedVal.toFixed(10)).toString()
+      historyDisplay.textContent = formula + ' ='
+      display.value = currentInput
+      expressionArray = []
+      isEvaluated = true
     }
-  })
-})
-
-equalsButton.addEventListener('click', () => {
-  if (currentNumber !== '' && previousNumber !== '') {
-    let result
-    switch (currentOperator) {
-      case '+':
-        result = parseFloat(previousNumber) + parseFloat(currentNumber)
-        break
-      case '-':
-        result = parseFloat(previousNumber) - parseFloat(currentNumber)
-        break
-      case '*':
-        result = parseFloat(previousNumber) * parseFloat(currentNumber)
-        break
-      case '/':
-        if (parseFloat(currentNumber) !== 0) {
-          result = parseFloat(previousNumber) / parseFloat(currentNumber)
-        } else {
-          display.value = 'Error'
-          return
-        }
-        break
-      default:
-        result = 0
-    }
-    display.value = result
-    currentNumber = result.toString()
-    previousNumber = ''
-    currentOperator = ''
+  } catch (err) {
+    display.value = 'Error'
+    currentInput = '0'
+    expressionArray = []
   }
-})
+}
 
-modulusButton.addEventListener('click', () => {
-  if (currentNumber !== '' && previousNumber !== '') {
-    const result = parseFloat(previousNumber) % parseFloat(currentNumber)
-    display.value = result
-    currentNumber = result.toString()
-    previousNumber = ''
-    currentOperator = ''
-  } else if (currentNumber !== '') {
-    currentNumber = (parseFloat(currentNumber) / 100).toString()
-    display.value = currentNumber
-  }
-})
+function updateUI() {
+  display.value = currentInput || '0'
+  historyDisplay.textContent = expressionArray.join(' ')
+}
 
-clearButton.addEventListener('click', () => {
-  display.value = ''
-  currentNumber = ''
-  previousNumber = ''
-  currentOperator = ''
-})
+window.addEventListener('keydown', (e) => {
+  e.preventDefault()
 
-backspaceButton.addEventListener('click', () => {
-  currentNumber = currentNumber.slice(0, -1)
-  display.value = currentNumber
-})
-
-decimalButton.addEventListener('click', () => {
-  if (currentNumber !== '' && !currentNumber.includes('.')) {
-    currentNumber += '.'
-    display.value = currentNumber
-  } else if (currentNumber === '') {
-    currentNumber = '0.'
-    display.value = currentNumber
-  }
-})
-
-plusminusButton.addEventListener('click', () => {
-  if (currentNumber !== '' && currentNumber !== '.') {
-    currentNumber = (parseFloat(currentNumber) * -1).toString()
-    display.value = currentNumber
+  switch (true) {
+    case (e.key >= '0' && e.key <= '9'):
+      handleDigit(e.key)
+      break
+    default:
+      switch (e.key) {
+        case '.': handleDecimal(); break
+        case '+': handleOperator('+'); break
+        case '-': handleOperator('−'); break
+        case '*': handleOperator('×'); break
+        case '/': handleOperator('÷'); break
+        case '%': handlePercentage(); break
+        case 'Enter':
+        case '=': 
+          evaluateExpression()
+          break
+        case 'Backspace': executeBackspace(); break
+        case 'Escape': resetCalculator(); break
+      }
+      break
   }
 })
